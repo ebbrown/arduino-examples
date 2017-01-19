@@ -1,18 +1,8 @@
-const int GREEN_LED_PIN = 9;
-const int RED_LED_PIN = 10;
-const int BLUE_LED_PIN = 11;
+const int GREEN_LED_PIN = 9, RED_LED_PIN = 10, BLUE_LED_PIN = 11;
+const int RED_SENSOR_PIN = A0, GREEN_SENSOR_PIN = A1, BLUE_SENSOR_PIN = A2;
 
-const int RED_SENSOR_PIN = A0;
-const int GREEN_SENSOR_PIN = A1;
-const int BLUE_SENSOR_PIN = A2;
-
-int redValue = 0;
-int greenValue = 0;
-int blueValue = 0;
-
-int redSensorValue = 0;
-int greenSensorValue = 0;
-int blueSensorValue = 0;
+int redValue, greenValue, blueValue;
+int redSensorValue, greenSensorValue, blueSensorValue;
 
 void setup() {
   Serial.begin(9600);
@@ -34,7 +24,7 @@ void loop() {
   Serial.print("\t Green: ");
   Serial.print(greenSensorValue);
   Serial.print("\t Blue: ");
-  Serial.print(blueSensorValue);
+  Serial.println(blueSensorValue);
   
   redValue = redSensorValue/4;
   greenValue = greenSensorValue/4;
@@ -45,7 +35,7 @@ void loop() {
   Serial.print("\t Green: ");
   Serial.print(greenValue);
   Serial.print("\t Blue: ");
-  Serial.print(blueValue);
+  Serial.println(blueValue);
 
   analogWrite(RED_LED_PIN, redValue);
   analogWrite(GREEN_LED_PIN, greenValue);
