@@ -1,21 +1,4 @@
-unsigned long previousTime = 0;
-int currentLED = 2;
-long interval = 50;
-int switchState, prevSwitchState, mode = 0;
-
-int spiralPattern[] = {2, 7, 3, 6, 4, 5};
-int spiralIndex = 0;
-bool spiralAscending = true;
-
-void setup() {
-  // Initialize pins
-  for (int x = 2; x < 8; x++) {
-    pinMode(x, OUTPUT);
-  }
-  pinMode(8, INPUT);
-}
-
-void loop() {
+void mainUpdate () {
   unsigned long currentTime = millis();
   toggleLightModeOnKeyUp(digitalRead(8));
   
@@ -59,27 +42,6 @@ void showLights (unsigned long currentTime) {
       }
       break;
   }
-}
-
-/*
- * Light Types
- */
-
-void linearGlow (bool ascending) {
-  digitalWrite(currentLED, HIGH);
-
-  if (ascending) {
-    currentLED++;
-    if (currentLED > 8) loopLights(0);
-  } else {
-    currentLED--;
-    if (currentLED < 0) loopLights(7);
-  }
-}
-
-void spiralGlow (int input) {
-  digitalWrite(spiralPattern[spiralIndex], input);
-  input > 0 ? spiralIndex++ : spiralIndex--;
 }
 
 /*
