@@ -10,7 +10,17 @@ void linearGlow (bool ascending) {
   }
 }
 
-void spiralGlow (int input) {
+void spiralType (int input) {
   digitalWrite(spiralPattern[spiralIndex], input);
   input > 0 ? spiralIndex++ : spiralIndex--;
+}
+
+void spiralGlow () {
+  if (spiralAscending) {
+    spiralType(HIGH);
+    if (spiralIndex > 8) spiralAscending = false;
+  } else {
+    spiralType(LOW);
+    if (spiralIndex < 0) spiralAscending = true;
+  }
 }
