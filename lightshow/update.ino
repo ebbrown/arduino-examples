@@ -1,13 +1,13 @@
 void mainUpdate () {
   unsigned long currentTime = millis();
   toggleLightModeOnKeyUp(digitalRead(8));
-  
+
   if (currentTime - previousTime > interval)
     showLights(currentTime);
 }
 
 void toggleLightModeOnKeyUp (int switchState) {
-  // Listen for changes in button  
+  // Listen for changes in button
   bool toggled = false;
 
   while (switchState == 1) {
@@ -15,10 +15,9 @@ void toggleLightModeOnKeyUp (int switchState) {
     switchState = digitalRead(8);
   }
 
-  if (toggled) {
-    clearLights();
-    mode = (mode + 1) % 3;
-    resetLED();
+  if (toggled) {    
+    mode = (mode + 1) % 4;
+    resetDisplay();
   }
 
 }
@@ -33,26 +32,48 @@ void showLights (unsigned long currentTime) {
       linearGlow(false);
       break;
     case 2:
-      if (spiralAscending) {
-        spiralGlow(HIGH);
-        if (spiralIndex > 8) spiralAscending = false;
-      } else {
-        spiralGlow(LOW);
-        if (spiralIndex < 0) spiralAscending = true;
-      }
+    case 3:
+      spiralGlow();
       break;
   }
 }
 
 /*
- * Helpers
- */
+   Helpers
+*/
 
-int resetLED () {
+void resetDisplay () {
+  clearLights();
+  resetLEDIndex();
+  resetInterval();
+  spiralAscending = true;  
+}
+
+int resetLEDIndex () {
   switch (mode) {
-    case 0: currentLED = 2;
-    case 1: currentLED = 7;
-    case 2: spiralIndex = 0;
+    case 0:
+      currentLED = 2;
+      break;
+    case 1: 
+      currentLED = 7;
+      break;
+    case 2:
+    case 3:
+      spiralIndex = 0;
+      break;
+  }
+}
+
+int resetInterval () {
+  switch (mode) {
+    case 0:
+    case 1:
+    case 2:
+      interval = 50;
+      break;
+    case 3: 
+      interval = 100;
+      break;
   }
 }
 
